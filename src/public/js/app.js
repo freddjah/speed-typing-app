@@ -3,6 +3,7 @@ let currentPointsElement = document.querySelector('#currentPoints')
 let timeLeftElement = document.querySelector('#timeLeft') 
 let wordInputElement = document.querySelector('#wordInput')
 let startButtonElement = document.querySelector('#startButton')
+let rulesAndStartButtonElement = document.querySelector('#rulesAndStartButton')
 
 const words = [
   'roomy',
@@ -149,7 +150,8 @@ let currentEffect = CURRENT_WORD_EFFECTS[0]
 
 let setUp = () => {
   timeLeft = 5.0
-  startButtonElement.classList.add('hide')
+  currentPoints = 0
+  rulesAndStartButtonElement.classList.add('hide')
   updateCurrentWord(currentWord)
   timeIntervalId = setInterval(timeCountDown, 100)
 }
@@ -162,7 +164,7 @@ let timeCountDown = () => {
     timeLeft = 0
     timeLeftElement.innerText = timeLeft
     clearInterval(timeIntervalId)
-    startButtonElement.classList.remove('hide')
+    rulesAndStartButtonElement.classList.remove('hide')
   }
 }
 
