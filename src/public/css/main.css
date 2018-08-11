@@ -7,3 +7,8 @@
   -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
 }
+
+.blur {
+  text-shadow: 0 0 16px black;
+  color: transparent;
+}

@@ -124,6 +124,10 @@ const CURRENT_WORD_EFFECTS = [
   {
     type: 'UPSIDE_DOWN',
     cssClasses: ['red-text', 'text-darken-4', 'upside-down']
+  },
+  {
+    type: 'BLUR',
+    cssClasses: ['blur']
   }
 ]
 
@@ -189,7 +193,8 @@ let updateCurrentWord = () => {
 
   if (Math.random() > .75) {
     effectsHandler.removeEffect(currentEffect)
-    const randomEffect = CURRENT_WORD_EFFECTS[Math.floor(Math.random() * CURRENT_WORD_EFFECTS.length)]
+    // const randomEffect = CURRENT_WORD_EFFECTS[Math.floor(Math.random() * CURRENT_WORD_EFFECTS.length)]
+    const randomEffect = CURRENT_WORD_EFFECTS[4]
     currentEffect = randomEffect
     effectsHandler.addEffect(randomEffect)
   }
