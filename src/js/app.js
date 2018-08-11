@@ -164,13 +164,17 @@ let updateCurrentWord = () => {
   
   if (currentEffect.type !== 'DEFAULT') {
     resetEffectToDefault(currentEffect)
+    currentEffect = EFFECTS[0]
   }
 
   if (Math.random() > .75) {
     effectsHandler.removeEffect(currentEffect)
     const randomEffect = EFFECTS[Math.floor(Math.random() * EFFECTS.length)]
+    currentEffect = randomEffect
     effectsHandler.addEffect(randomEffect)
   }
+
+  console.log(currentEffect.type)
 }
 
 let resetEffectToDefault = (currentEffect) => {
@@ -194,13 +198,13 @@ let validateWordInput = () => {
 
 const effectsHandler = {
   addEffect: (effect) => {
-    effect.cssClasses.forEach((effect) => {
-      currentWordElement.classList.add(effect)
+    effect.cssClasses.forEach((cssClass) => {
+      currentWordElement.classList.add(cssClass)
     })
   },
   removeEffect: (effect) => {
-    effect.cssClasses.forEach((effect) => {
-      currentWordElement.classList.remove(effect)
+    effect.cssClasses.forEach((cssClass) => {
+      currentWordElement.classList.remove(cssClass)
     })
   }
 }
