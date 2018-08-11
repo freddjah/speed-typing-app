@@ -3,12 +3,19 @@ let currentPointsElement = document.querySelector('#currentPoints')
 let timeLeftElement = document.querySelector('#timeLeft') 
 let wordInputElement = document.querySelector('#wordInput')
 
+const words = [
+  'hello',
+  'this',
+  'is',
+  'speed',
+  'typing'
+]
 let timeLeft = 5.0
-let currentWord = 'Hello'
+let currentWord = words[Math.floor(Math.random() * words.length)]
 let currentPoints = 0
 
 let setUp = () => {
-  updateCurrentWord('Hello')
+  updateCurrentWord(currentWord)
   setInterval(timeCountDown, 100)
 }
 
@@ -33,17 +40,25 @@ let incrementCurrentPoints = () => {
   currentPointsElement.innerText = currentPoints
 }
 
-let updateCurrentWord = (newWord) => {
+let updateCurrentWord = () => {
+  const newWord = words[Math.floor(Math.random() * words.length)]
   currentWord = newWord
   currentWordElement.innerText = currentWord
 }
 
-wordInputElement.addEventListener('input', (_event) => {
+let setEmptyWordInput = () => {
+  wordInputElement.value = ''
+}
+
+let validateWordInput = () => {
   if (currentWord === wordInputElement.value && timeLeft) {
-    console.log('Correct!')
+    updateCurrentWord()
+    setEmptyWordInput()
     updateTimeLeft(5.0)
     incrementCurrentPoints()
   }
-})
+}
+
+wordInputElement.addEventListener('input', validateWordInput)
 
 setUp()
