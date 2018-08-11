@@ -2,6 +2,7 @@ let currentWordElement = document.querySelector('#currentWord')
 let currentPointsElement = document.querySelector('#currentPoints')
 let timeLeftElement = document.querySelector('#timeLeft') 
 let wordInputElement = document.querySelector('#wordInput')
+let startButtonElement = document.querySelector('#startButton')
 
 const words = [
   'roomy',
@@ -141,13 +142,16 @@ const WORD_INPUT_EFFECTS = [
 ]
 
 let timeLeft = 5.0
+let timeIntervalId = undefined
 let currentWord = words[Math.floor(Math.random() * words.length)]
 let currentPoints = 0
 let currentEffect = CURRENT_WORD_EFFECTS[0]
 
 let setUp = () => {
+  timeLeft = 5.0
+  startButtonElement.classList.add('hide')
   updateCurrentWord(currentWord)
-  setInterval(timeCountDown, 100)
+  timeIntervalId = setInterval(timeCountDown, 100)
 }
 
 let timeCountDown = () => {
@@ -157,7 +161,8 @@ let timeCountDown = () => {
   } else {
     timeLeft = 0
     timeLeftElement.innerText = timeLeft
-    clearInterval(timeCountDown)
+    clearInterval(timeIntervalId)
+    startButtonElement.classList.remove('hide')
   }
 }
 
@@ -186,8 +191,6 @@ let updateCurrentWord = () => {
     currentEffect = randomEffect
     effectsHandler.addEffect(randomEffect)
   }
-
-  console.log(currentEffect.type)
 }
 
 let resetEffectToDefault = () => {
@@ -227,6 +230,5 @@ const effectsHandler = {
   }
 }
 
+startButtonElement.addEventListener('click', setUp)
 wordInputElement.addEventListener('input', validateWordInput)
-
-setUp()
