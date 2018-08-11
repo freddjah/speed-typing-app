@@ -106,7 +106,7 @@ const words = [
   'wide'
 ]
 
-const EFFECTS = [
+const CURRENT_WORD_EFFECTS = [
   {
     type: 'DEFAULT',
     cssClasses: ['red-text', 'text-darken-4']
@@ -125,11 +125,25 @@ const EFFECTS = [
   }
 ]
 
+const WORD_INPUT_EFFECTS = [
+  {
+    type: 'DOUBLE_KEY_PRESS',
+    implement: (event) => {
+      wordInputElement.value += event.data
+    }
+  },
+  {
+    type: 'REVERSE_INPUT',
+    implement: () => {
+      wordInputElement.value = wordInputElement.value.split('').reverse().join('')
+    }
+  }
+]
 
 let timeLeft = 5.0
 let currentWord = words[Math.floor(Math.random() * words.length)]
 let currentPoints = 0
-let currentEffect = EFFECTS[0]
+let currentEffect = CURRENT_WORD_EFFECTS[0]
 
 let setUp = () => {
   updateCurrentWord(currentWord)
@@ -163,13 +177,12 @@ let updateCurrentWord = () => {
   currentWordElement.innerText = currentWord
   
   if (currentEffect.type !== 'DEFAULT') {
-    resetEffectToDefault(currentEffect)
-    currentEffect = EFFECTS[0]
+    resetEffectToDefault()
   }
 
   if (Math.random() > .75) {
     effectsHandler.removeEffect(currentEffect)
-    const randomEffect = EFFECTS[Math.floor(Math.random() * EFFECTS.length)]
+    const randomEffect = CURRENT_WORD_EFFECTS[Math.floor(Math.random() * CURRENT_WORD_EFFECTS.length)]
     currentEffect = randomEffect
     effectsHandler.addEffect(randomEffect)
   }
@@ -177,9 +190,9 @@ let updateCurrentWord = () => {
   console.log(currentEffect.type)
 }
 
-let resetEffectToDefault = (currentEffect) => {
+let resetEffectToDefault = () => {
   effectsHandler.removeEffect(currentEffect)
-  currentEffect = EFFECTS[0]
+  currentEffect = CURRENT_WORD_EFFECTS[0]
   effectsHandler.addEffect(currentEffect)
 }
 
@@ -187,7 +200,12 @@ let setEmptyWordInput = () => {
   wordInputElement.value = ''
 }
 
-let validateWordInput = () => {
+let validateWordInput = (event) => {
+  if (Math.random() > .9 && event.data) {
+    const randomWordInputEffect = WORD_INPUT_EFFECTS[Math.floor(Math.random() * WORD_INPUT_EFFECTS.length)]
+    randomWordInputEffect.implement(event)
+  }
+
   if (currentWord === wordInputElement.value && timeLeft) {
     updateCurrentWord()
     setEmptyWordInput()
