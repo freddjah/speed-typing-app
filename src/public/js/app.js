@@ -193,8 +193,7 @@ let updateCurrentWord = () => {
 
   if (Math.random() > .75) {
     effectsHandler.removeEffect(currentEffect)
-    // const randomEffect = CURRENT_WORD_EFFECTS[Math.floor(Math.random() * CURRENT_WORD_EFFECTS.length)]
-    const randomEffect = CURRENT_WORD_EFFECTS[4]
+    const randomEffect = CURRENT_WORD_EFFECTS[Math.floor(Math.random() * CURRENT_WORD_EFFECTS.length)]
     currentEffect = randomEffect
     effectsHandler.addEffect(randomEffect)
   }
